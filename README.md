@@ -2,7 +2,7 @@
 
 A personal portfolio website showcasing my work as a **Full-Stack Developer** focused on **AI, LLM & Automation**. Built as a single, self-contained, responsive HTML page.
 
-🔗 **Live site:** [Add your Vercel link here]
+🔗 **Live site:** [byshubh.co.in](https://byshubh.co.in/)
 🎓 B.Tech in Electronics & Instrumentation Engineering, NIT Agartala (2024–2028)
 
 ---
