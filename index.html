@@ -759,6 +759,13 @@ section { padding: 96px 0; scroll-margin-top: 78px; }
   background-size: 16px 16px; pointer-events: none;
 }
 .deck-photo.has-img::after { display: none; }
+.deck-photo.is-logo {
+  display: grid; place-items: center;
+  background: radial-gradient(circle at 50% 40%, #fbf8f1, #ece5d6);
+}
+.deck-photo.is-logo img { width: auto; height: auto; max-width: 62%; max-height: 52%; object-fit: contain; object-position: center; }
+.deck-mono { font-family: var(--font-display); font-size: 3.2rem; letter-spacing: .02em; color: #5f6f52; }
+html[data-theme="dark"] .deck-photo.is-logo { background: radial-gradient(circle at 50% 40%, #f4efe4, #ddd4c2); }
 .deck-ph {
   position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 8px;
   color: rgba(255,255,255,.95); font-size: .8rem; font-weight: 500; letter-spacing: .02em;
@@ -1689,15 +1696,15 @@ var ACHIEVEMENTS = [
   { tag: 'Experience', year: 'Aug 2026 – Present', title: 'AI & Full Stack Developer', featured: true,
     img: '#project-stepahead', c1: '#71837f', c2: '#b4c2b6',
     text: 'Working at Say Step Ahead Youth Foundation (Step Ahead India). Building LLM-powered chatbots and WhatsApp automation with Glific, an AI-driven job portal with automated job scraping, and full-stack MERN apps.' },
-  { tag: 'Hackathon', year: '2025', title: 'Smart India Hackathon', img: '', c1: '#a9785b', c2: '#d8b896',
+  { tag: 'Hackathon', year: '2025', title: 'Smart India Hackathon', img: '#ach-sih', logo: true, c1: '#a9785b', c2: '#d8b896',
     text: 'Qualified the Smart India Hackathon (SIH) 2025 internal round.' },
-  { tag: 'Coding', year: 'DSA', title: '300+ DSA Problems Solved', img: '', c1: '#5f6d76', c2: '#9eabb2',
+  { tag: 'Coding', year: 'DSA', title: '300+ DSA Problems Solved', img: '#ach-shipped', c1: '#5f6d76', c2: '#9eabb2',
     text: 'Solved 300+ Data Structures & Algorithms problems on LeetCode and other coding platforms.' },
-  { tag: 'Experience', year: 'May – Jul 2026', title: 'Web Developer at M2M', img: '', c1: '#857a66', c2: '#c6b99e',
+  { tag: 'Experience', year: 'May – Jul 2026', title: 'Web Developer at M2M', img: '', mono: 'M2M', c1: '#857a66', c2: '#c6b99e',
     text: 'Built and maintained responsive websites and web apps with React, Node.js, MongoDB, WordPress and Shopify, and deployed them on Vercel and Render.' },
-  { tag: 'Leadership', year: 'NIT Agartala', title: 'Internship Coordinator & NCC Corporal', img: '', c1: '#5b6b3a', c2: '#97a374',
+  { tag: 'Leadership', year: 'NIT Agartala', title: 'Internship Coordinator & NCC Corporal', img: 'css:--about-photo', c1: '#5b6b3a', c2: '#97a374',
     text: 'Internship Coordinator at the Training & Placement Cell, NIT Agartala, and Corporal in the NCC.' },
-  { tag: 'Certificate', year: 'NIELIT', title: 'NIELIT Cybersecurity', img: '', c1: '#4d5c55', c2: '#86968c',
+  { tag: 'Certificate', year: 'NIELIT', title: 'NIELIT Cybersecurity', img: '#ach-nielit', logo: true, c1: '#4d5c55', c2: '#86968c',
     text: 'Completed a Cybersecurity course from NIELIT and was selected for the next round.' }
 ];
 
@@ -1719,20 +1726,30 @@ var ACHIEVEMENTS = [
   var EXPAND = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';
 
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  // img can be a URL, '#id' (reuse the first <img> inside that element on this page)
+  // or 'css:--var' (reuse a CSS custom property that holds url(...))
   function imgSrc(a) {
-    if (a.img && a.img.charAt(0) === '#') {
-      var el = document.querySelector(a.img + ' .thumb img');
+    if (!a.img) return '';
+    if (a.img.charAt(0) === '#') {
+      var el = document.querySelector(a.img + ' img');
       return el ? el.getAttribute('src') : '';
+    }
+    if (a.img.indexOf('css:') === 0) {
+      var v = getComputedStyle(document.documentElement).getPropertyValue(a.img.slice(4));
+      var m = v && v.match(/url\(\s*["']?([^"')]+)["']?\s*\)/);
+      return m ? m[1] : '';
     }
     return a.img;
   }
   var STAR = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg>';
   function photo(a) {
     var src = imgSrc(a);
-    return '<div class="deck-photo' + (src ? ' has-img' : '') + '" style="--c1:' + a.c1 + ';--c2:' + a.c2 + '">' +
-      (a.featured ? '<span class="deck-star">' + STAR + 'Highlight</span>' : '') +
-      (src ? '<img src="' + esc(src) + '" alt="' + esc(a.title) + '" loading="lazy" draggable="false">'
-           : '<div class="deck-ph">' + CAMERA + '<span>Photo yahan aayegi</span></div>') + '</div>';
+    var cls = 'deck-photo' + (src || a.mono ? ' has-img' : '') + (a.logo || a.mono ? ' is-logo' : '');
+    var inner = src ? '<img src="' + esc(src) + '" alt="' + esc(a.title) + '" loading="lazy" draggable="false">'
+      : a.mono ? '<span class="deck-mono">' + esc(a.mono) + '</span>'
+      : '<div class="deck-ph">' + CAMERA + '<span>Photo yahan aayegi</span></div>';
+    return '<div class="' + cls + '" style="--c1:' + a.c1 + ';--c2:' + a.c2 + '">' +
+      (a.featured ? '<span class="deck-star">' + STAR + 'Highlight</span>' : '') + inner + '</div>';
   }
   function body(a) {
     return '<div class="deck-body"><div class="deck-meta"><span class="deck-chip">' + esc(a.tag) + '</span>' +
