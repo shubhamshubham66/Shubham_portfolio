@@ -33,11 +33,11 @@ A personal portfolio website showcasing my work as a **Full-Stack Developer** fo
 
 | Project | Description | Links |
 |---|---|---|
-| **Cadet Connection Portal** | Full-stack NCC management portal with role-based dashboards | [Live](https://cadet-connection-portal.vercel.app/) · [Code](https://github.com/shubhamshubham66/Cadet-Connection-Portal) |
+| **Cadet Connection Portal** | Full-stack NCC management portal with role-based dashboards | [Live](https://cadet.byshubh.co.in/) · [Code](https://github.com/shubhamshubham66/Cadet-Connection-Portal) |
 | **Step Ahead India — AI Job Portal** | AI-driven job portal integration with automated job scraping & listing | [Live](https://stepaheadindia.com/jobs) |
-| **DAYFLOW — HRMS** | Full-stack HR Management System with attendance, payroll & analytics | [Live](https://dayflow-human-resource-ms.vercel.app/) · [Code](https://github.com/shubhamshubham66/Dayflow_Human_Resource_MS) |
+| **DAYFLOW — HRMS** | Full-stack HR Management System with attendance, payroll & analytics | [Live](https://dayflow.byshubh.co.in/) · [Code](https://github.com/shubhamshubham66/Dayflow_Human_Resource_MS) |
 | **AUREL** | Luxury jewelry e-commerce experience with immersive 3D product views | [Live](https://shubhamshubham66.github.io/AUREL-Fine-Jewelry-E-Commerce-Website/) · [Code](https://github.com/shubhamshubham66/AUREL-Fine-Jewelry-E-Commerce-Website) |
-| **SBI Saathi AI** | Multilingual voice & text AI banking assistant concept | [Live](https://sbi-saathi-ai.vercel.app/) · [Code](https://github.com/shubhamshubham66/SBI-Saathi-AI) |
+| **SBI Saathi AI** | Multilingual voice & text AI banking assistant concept | [Live](https://sbi.byshubh.co.in/) · [Code](https://github.com/shubhamshubham66/SBI-Saathi-AI) |
 
 ---
 
